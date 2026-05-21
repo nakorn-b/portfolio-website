@@ -21,14 +21,6 @@ const projects = [
     tags: ['RAG', 'Airflow', 'LLM', 'ML System', 'Vector Database'],
     image: proteinImg
   },
-  {
-    id: '03',
-    category: 'Robotics & Control',
-    title: 'Autonomous Navigation',
-    description: 'Engineering sensor fusion algorithms and reinforcement learning agents for complex environment traversal. This work focuses on real-time decision making in unstructured terrain, ensuring structural integrity in high-stakes robotic maneuvers.',
-    tags: ['ROS', 'RL', 'C++', 'ComputerVision'],
-    image: keycapImg
-  }
 ];
 
 const ProjectCard = ({ 

@@ -78,6 +78,7 @@ export const Hero: React.FC = () => {
         transition={{ duration: 1.2, delay: 0.8, ease: [0.23, 1, 0.32, 1] }}
         className="relative z-10 flex flex-col items-center mt-12"
       >
+        {/* @ts-ignore - Custom attributes for string-tune library */}
         <div 
           string="magnetic"
           string-radius="800"
