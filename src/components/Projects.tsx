@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, MotionValue, useMotionTemplate } from 'framer-motion';
 import proteinImg from '../assets/protein.png';
 import esmImg from '../assets/distilESM-2-AMP.png';
-import keycapImg from '../assets/keycap.png';
 
 const projects = [
   {
