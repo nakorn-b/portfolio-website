@@ -72,7 +72,7 @@ export const Experience: React.FC = () => {
                           <img 
                             src={exp.logo} 
                             alt={`${exp.company} logo`}
-                            className="h-8 sm:h-10 md:h-14 w-auto object-contain transition-all duration-700 pointer-events-none rounded-lg md:rounded-xl"
+                            className="h-8 sm:h-10 md:h-14 w-auto object-contain transition-all duration-700 pointer-events-none rounded-lg md:rounded-xl group-hover:scale-110 group-hover:brightness-110"
                           />
                         </div>
                       )}

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, MotionValue, useMotionTemplate } from 'framer-motion';
 import proteinImg from '../assets/protein.png';
 import esmImg from '../assets/distilESM-2-AMP.png';
-import heroImg from '../assets/hero.png';
+import keycapImg from '../assets/keycap.png';
 
 const projects = [
   {
@@ -15,10 +15,10 @@ const projects = [
   },
   {
     id: '02',
-    category: 'Molecular Biology',
-    title: 'Protein Structure Prediction',
+    category: 'AI & ML System',
+    title: 'JobPulse',
     description: 'Developing robust predictive architectures for high-frequency market analysis and volatility modeling. By leveraging transformer-based models and attention mechanisms, we achieved unprecedented accuracy in predicting non-linear market shifts.',
-    tags: ['LSTM', 'Time-Series', 'Finance', 'TensorFlow'],
+    tags: ['RAG', 'Airflow', 'LLM', 'ML System', 'Vector Database'],
     image: proteinImg
   },
   {
@@ -27,7 +27,7 @@ const projects = [
     title: 'Autonomous Navigation',
     description: 'Engineering sensor fusion algorithms and reinforcement learning agents for complex environment traversal. This work focuses on real-time decision making in unstructured terrain, ensuring structural integrity in high-stakes robotic maneuvers.',
     tags: ['ROS', 'RL', 'C++', 'ComputerVision'],
-    image: heroImg
+    image: keycapImg
   }
 ];
 
@@ -61,7 +61,7 @@ const ProjectCard = ({
         className="relative w-full h-full bg-[#0C0C0C] rounded-[3rem] md:rounded-[4rem] border border-white/10 p-8 md:p-12 lg:p-16 pb-20 md:pb-24 lg:pb-32 flex flex-col md:flex-row gap-12 overflow-hidden shadow-2xl"
       >
         {/* Background Decorative ID */}
-        <span className="absolute -bottom-10 -right-10 text-[25vw] font-bold text-white/[0.05] select-none pointer-events-none leading-none">
+        <span className="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 text-[35vw] md:text-[25vw] font-bold text-white/[0.08] md:text-white/[0.05] select-none pointer-events-none leading-none">
           {project.id}
         </span>
 

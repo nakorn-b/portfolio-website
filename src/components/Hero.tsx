@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import keycapVid from '../assets/3D-keycap.mp4';
 
 const HeroVideo: React.FC = () => {
@@ -17,7 +17,7 @@ const HeroVideo: React.FC = () => {
 };
 
 export const Hero: React.FC = () => {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -28,7 +28,7 @@ export const Hero: React.FC = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, transform: 'translateY(20px)' },
     show: { 
       opacity: 1, 

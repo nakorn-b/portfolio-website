@@ -73,7 +73,7 @@ export const FeaturedArtifacts: React.FC = () => {
                       src={item.image} 
                       alt={item.title} 
                       loading="lazy"
-                      whileHover={{ transform: 'scale(1.1)', brightness: 0.6 }}
+                      whileHover={{ transform: 'scale(1.1)', filter: 'grayscale(0) brightness(0.6)' }}
                       transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
                       className="w-full h-full object-cover brightness-[0.5]"
                     />
