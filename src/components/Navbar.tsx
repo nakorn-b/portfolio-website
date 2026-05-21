@@ -21,7 +21,7 @@ export const Navbar: React.FC = () => {
         className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-3rem)] md:w-max max-w-[1400px]"
       >
         <nav className="bg-white/80 backdrop-blur-lg border border-foreground/5 rounded-full px-6 md:px-10 py-4 flex items-center justify-between md:justify-start gap-12 shadow-xl shadow-primary/5">
-          <a href="/" className="font-sans font-bold text-2xl tracking-tight text-foreground hover:text-primary transition-colors cursor-pointer">
+          <a href="/" className="font-caslon font-bold text-2xl tracking-tight text-foreground hover:text-primary transition-colors cursor-pointer">
             NEMO
           </a>
           

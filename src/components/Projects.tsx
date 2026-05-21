@@ -29,6 +29,9 @@ const MagneticButton = ({ children, href }: { children: React.ReactNode, href?: 
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouse = (e: React.MouseEvent) => {
+    // Skip magnetic effect on touch devices even if mouse-like events trigger
+    if (window.matchMedia('(hover: none)').matches) return;
+    
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current!.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);
@@ -103,7 +106,7 @@ const ProjectCard = ({
               <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">{project.category}</span>
               <div className="h-px w-12 bg-white/20" />
             </div>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold text-white tracking-tighter leading-tight">
+            <h3 className="text-4xl md:text-5xl lg:text-6xl font-caslon font-semibold text-white tracking-tight leading-tight">
               {project.title}
             </h3>
           </div>

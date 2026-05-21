@@ -4,6 +4,12 @@ export const initStringTune = () => {
   if (typeof window === 'undefined') return;
 
   const init = () => {
+    // Check if it's a touch device (no hover capability)
+    if (window.matchMedia('(hover: none)').matches) {
+      console.log('📱 StringTune: Touch device detected, skipping for performance.');
+      return;
+    }
+
     console.log('🚀 StringTune: Attempting initialization...');
     
     try {

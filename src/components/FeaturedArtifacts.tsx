@@ -91,7 +91,7 @@ export const FeaturedArtifacts: React.FC = () => {
 
                     <div className="flex flex-col gap-2">
                       <span className="font-sans text-xs font-medium tracking-[0.2em] text-primary uppercase">{item.meta}</span>
-                      <h3 className="font-sans text-4xl font-medium text-white tracking-tight">{item.title}</h3>
+                      <h3 className="font-caslon text-4xl font-semibold text-white tracking-tight">{item.title}</h3>
                       <p className="font-sans text-sm text-white/60 leading-relaxed max-w-xs">{item.subtitle}</p>
                     </div>
                   </div>

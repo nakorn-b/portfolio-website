@@ -75,7 +75,7 @@ export const Experience: React.FC = () => {
                         </div>
                       )}
                       <span className="md:hidden font-sans text-[10px] tracking-[0.3em] text-primary font-bold uppercase mb-2 block w-fit border-b border-primary/20 pb-1">{exp.period}</span>
-                      <h3 className="font-sans text-2xl sm:text-3xl font-bold text-foreground tracking-tight md:pr-16">{exp.role}</h3>
+                      <h3 className="font-caslon text-2xl sm:text-3xl font-semibold text-foreground tracking-tight md:pr-16">{exp.role}</h3>
                       <p className="font-sans text-lg sm:text-xl text-foreground/40 italic">{exp.company}</p>
                     </div>
 

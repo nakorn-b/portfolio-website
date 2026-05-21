@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
 import profileImg from '../assets/profile.png';
 import AnimatedTextCycle from './ui/animated-text-cycle';
 
 const WordReveal = ({ text, delay = 0 }: { text: string; delay?: number }) => {
+  const [isMobile, setIsMobile] = useState(false);
   const words = text.split(' ');
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -18,7 +26,7 @@ const WordReveal = ({ text, delay = 0 }: { text: string; delay?: number }) => {
     visible: {
       opacity: 1,
       y: 0,
-      filter: 'blur(0px)',
+      filter: isMobile ? 'none' : 'blur(0px)',
       transition: {
         type: 'spring',
         damping: 12,
@@ -28,7 +36,7 @@ const WordReveal = ({ text, delay = 0 }: { text: string; delay?: number }) => {
     hidden: {
       opacity: 0,
       y: 20,
-      filter: 'blur(8px)',
+      filter: isMobile ? 'none' : 'blur(8px)',
       transition: {
         type: 'spring',
         damping: 12,
@@ -46,7 +54,7 @@ const WordReveal = ({ text, delay = 0 }: { text: string; delay?: number }) => {
       viewport={{ once: true, margin: "-100px" }}
     >
       {words.map((word, index) => (
-        <motion.span key={index} variants={child}>
+        <motion.span key={index} variants={child} style={{ willChange: 'transform, opacity' }}>
           {word}
         </motion.span>
       ))}
@@ -56,13 +64,13 @@ const WordReveal = ({ text, delay = 0 }: { text: string; delay?: number }) => {
 
 export const About: React.FC = () => {
   return (
-    <section className="section-spacing bg-background px-4 md:px-6 overflow-hidden relative border-b border-foreground/5" id="about">
+    <section className="section-spacing bg-background px-4 md:px-6 overflow-visible relative border-b border-foreground/5" id="about">
       <div className="max-w-[1400px] mx-auto min-h-[50vh] md:min-h-[60vh] flex flex-col justify-center">
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
           
           {/* Left Column: Huge Title & Intro */}
-          <div className="lg:col-span-7 flex flex-col gap-12">
+          <div className="lg:col-span-7 flex flex-col gap-10 md:gap-12">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -71,7 +79,7 @@ export const About: React.FC = () => {
               className="flex flex-col"
             >
               <span className="eyebrow-pill text-primary border-primary/20 bg-primary/5">Philosophy</span>
-              <h2 className="text-[12vw] lg:text-[10vw] font-caslon font-bold text-primary leading-[0.8] tracking-tighter uppercase select-none">
+              <h2 className="text-[14vw] lg:text-[10vw] font-caslon font-bold text-primary leading-[0.85] tracking-tighter uppercase select-none">
                 About <br /> <AnimatedTextCycle words={["Me", "Nemo", "Nakorn"]} interval={3000} />
               </h2>
             </motion.div>
@@ -96,14 +104,13 @@ export const About: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Colored Portrait in sophistication container */}
+          {/* Right Column: Portrait without clipping path issues */}
           <motion.div 
-            initial={{ opacity: 0, transform: 'scale(0.95)', clipPath: 'inset(100% 0 0 0)' }}
-            whileInView={{ opacity: 1, transform: 'scale(1)', clipPath: 'inset(0% 0 0 0)' }}
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
-            style={{ willChange: 'transform, clip-path' }}
-            className="lg:col-span-5 flex justify-center lg:justify-end"
+            transition={{ duration: 1.2, ease: [0.23, 1, 0.32, 1] }}
+            className="lg:col-span-5 flex justify-center lg:justify-end py-10 lg:py-0"
           >
             {/* @ts-ignore - Custom attributes for string-tune library */}
             <div 
@@ -116,9 +123,9 @@ export const About: React.FC = () => {
                 transform: 'translate(calc(var(--magnetic-x) * 0.3%), calc(var(--magnetic-y) * 0.3%))',
                 willChange: 'transform',
               }}
-              className="bg-muted-surface p-2 rounded-[3rem] border border-foreground/5 shadow-2xl shadow-primary/5 w-full max-w-[240px] sm:max-w-[300px] md:max-w-[480px] relative"
+              className="bg-muted-surface p-2 rounded-[3rem] border border-foreground/5 shadow-2xl shadow-primary/5 w-full max-w-[280px] sm:max-w-[340px] md:max-w-[480px] relative z-10"
             >
-              <div className="aspect-[4/5] overflow-hidden rounded-[2.8rem] border border-foreground/10 bg-black relative z-10">
+              <div className="aspect-[4/5] overflow-hidden rounded-[2.8rem] border border-foreground/10 bg-black relative">
                 <img 
                   src={profileImg} 
                   alt="Portrait of Nakorn"
