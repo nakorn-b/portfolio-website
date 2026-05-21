@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-25..0&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary: #B12B16; /* Deep Crimson/Red from reference */
+  --color-background: #FDFBF7; /* Warm Cream from reference */
+  --color-foreground: #18181B; /* Darker near-black for text */
+  --color-muted-surface: #F5F1E9; /* Slightly darker cream for cards */
+  
+  --font-caslon: "Libre Caslon Text", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-hanken: "Hanken Grotesk", sans-serif;
+
+  --spacing-margin-mobile: 24px;
+  --spacing-margin-desktop: 120px;
+  --max-width: 1400px;
+  
+  --radius-high-end: 2.5rem;
+
+  --ease-vanguard: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@theme inline {
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+}
+
+:root {
+  --background: #FDFBF7;
+  --foreground: #18181B;
+  --card: #FDFBF7;
+  --card-foreground: #18181B;
+  --popover: #FDFBF7;
+  --popover-foreground: #18181B;
+  --primary: #B12B16;
+  --primary-foreground: #ffffff;
+  --secondary: #3F3F46;
+  --secondary-foreground: #FDFBF7;
+  --muted: #F2EDE4;
+  --muted-foreground: #57534E;
+  --accent: #B12B16;
+  --accent-foreground: #ffffff;
+  --destructive: #EF4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(24, 24, 27, 0.08);
+  --input: rgba(24, 24, 27, 0.08);
+  --ring: #B12B16;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  html {
+    @apply font-sans;
+    background-color: var(--background);
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-white;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  /* Grain/Noise Overlay - Elite Implementation */
+  body::after {
+    content: "";
+    @apply fixed inset-0 z-[100] pointer-events-none opacity-[0.03];
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-caslon font-medium tracking-tight text-foreground;
+  }
+}
+
+@utility display-xl {
+  font-family: var(--font-caslon);
+  font-size: clamp(4rem, 15vw, 12rem);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+}
+
+@utility display-lg {
+  font-family: var(--font-caslon);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+@utility eyebrow-pill {
+  @apply rounded-full px-4 py-1 text-[10px] uppercase tracking-[0.2em] font-hanken font-bold bg-foreground/5 text-foreground/40 border border-foreground/10 w-fit inline-block mb-8;
+}
+
+@utility high-end-card {
+  @apply rounded-[2.5rem] bg-foreground/[0.02] border border-foreground/5 transition-vanguard;
+}
+
+@utility glass-panel {
+  @apply bg-white/80 backdrop-blur-lg border border-foreground/5 shadow-lg shadow-primary/5;
+}
+
+@utility section-spacing {
+  @apply py-32 md:py-52;
+}
+
+@utility transition-vanguard {
+  transition: transform 800ms var(--ease-vanguard), opacity 800ms var(--ease-vanguard), background-color 800ms var(--ease-vanguard), border-color 800ms var(--ease-vanguard), box-shadow 800ms var(--ease-vanguard), filter 800ms var(--ease-vanguard);
+}
+
+@utility tactile-press {
+  transition: transform 150ms var(--ease-out-expo);
+  @apply active:scale-[0.97] cursor-pointer select-none;
+}
+
+@layer utilities {
+  @media (hover: hover) and (pointer: fine) {
+    .hover-lift {
+      @apply hover:-translate-y-1 transition-transform duration-300 ease-out-expo;
+    }
+  }
+}
+
+/* Global Hover Gating */
+@media (hover: none) {
+  .group:hover .group-hover\:scale-110,
+  .group:hover .group-hover\:brightness-50 {
+    transform: none !important;
+    filter: none !important;
+  }
+}
