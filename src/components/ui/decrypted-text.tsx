@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useInView } from 'framer-motion';
 
 interface DecryptedTextProps {
   text: string;
@@ -19,7 +19,6 @@ export const DecryptedText: React.FC<DecryptedTextProps> = ({
   className = "" 
 }) => {
   const [displayText, setDisplayText] = useState('');
-  const [isDecrypted, setIsDecrypted] = useState(false);
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
@@ -34,7 +33,7 @@ export const DecryptedText: React.FC<DecryptedTextProps> = ({
         setDisplayText(
           text
             .split('')
-            .map((char, index) => {
+            .map((_, index) => {
               if (index < iteration) {
                 return text[index];
               }
@@ -45,7 +44,6 @@ export const DecryptedText: React.FC<DecryptedTextProps> = ({
 
         if (iteration >= text.length) {
           clearInterval(interval);
-          setIsDecrypted(true);
         }
 
         iteration += 1 / maxScrambles;
