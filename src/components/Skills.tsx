@@ -24,19 +24,15 @@ export const Skills: React.FC = () => {
   const skillGroups = [
     {
       title: 'ML Frameworks',
-      skills: ['PyTorch', 'TensorFlow', 'Keras', 'JAX']
+      skills: ['PyTorch', 'Keras', 'Hugging Face🤗', 'Scikit-learn', 'MLflow']
     },
     {
       title: 'Data Stack',
-      skills: ['SQL (PostgreSQL)', 'Apache Spark', 'MongoDB', 'Airflow']
+      skills: ['PostgreSQL', 'PySpark', 'Airflow', 'BigQuery', 'Qdrant']
     },
     {
-      title: 'Languages',
-      skills: ['Python', 'C++', 'R', 'Julia']
-    },
-    {
-      title: 'Tools',
-      skills: ['Docker / K8s', 'AWS (EC2, S3)', 'Git / GitHub', 'Terraform']
+      title: 'Tools & Other Frameworks',
+      skills: ['Docker', 'Git / GitHub', 'Vercel', 'FastAPI', 'Postman', 'Streamlit']
     }
   ];
 
@@ -59,10 +55,15 @@ export const Skills: React.FC = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="flex flex-wrap justify-center gap-8"
         >
           {skillGroups.map((group) => (
-            <motion.div key={group.title} variants={item} style={{ willChange: 'transform' }}>
+            <motion.div 
+              key={group.title} 
+              variants={item} 
+              style={{ willChange: 'transform' }}
+              className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1.5rem)] max-w-sm"
+            >
               <div className="bg-muted-surface p-1.5 rounded-[2.8rem] border border-foreground/5 h-full transition-vanguard hover:shadow-xl hover:shadow-primary/5">
                 <div className="bg-background h-full p-10 flex flex-col gap-10 group cursor-default rounded-[2.5rem] border border-foreground/5">
                   <h4 className="font-sans text-[10px] tracking-[0.3em] text-primary font-bold uppercase border-b border-foreground/5 pb-6">

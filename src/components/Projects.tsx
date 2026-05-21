@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, MotionValue, useMotionTemplate } from 'framer-motion';
-import proteinImg from '../assets/protein.png';
+import jobpulseImg from '../assets/jobppulse.png';
 import esmImg from '../assets/distilESM-2-AMP.png';
 
 const projects = [
@@ -8,19 +8,59 @@ const projects = [
     id: '01',
     category: 'Bioinformatics & AI',
     title: 'DistilESM-2-AMP',
-    description: 'Pioneering research in generative models for high-fidelity style transfer and latent manifold navigation. This project explores the intersection of biological pattern recognition and synthetic intelligence, creating a bridge between organic and digital aesthetics.',
-    tags: ['PyTorch', 'GANs', 'StyleTransfer', 'Research'],
-    image: esmImg
-  },
+    description: 'Pioneering computational efficiency in bioinformatics, this project centered on distilling the massive ESM-2 transformer into a specialized 4M parameter student model. The process began by filtering 8 million UniProt sequences using PySpark, feeding a high-throughput training pipeline on a SLURM-managed GPU cluster. Through precise knowledge distillation and fine-tuning on curated AMP datasets, the student model eventually surpassed its teacher’s accuracy in domain-specific classification. The project culminated in a production-ready deployment on GCP Cloud Run and HuggingFace, serving batch peptide classification with real-time confidence scores.',
+    tags: ['PyTorch', 'PySpark', 'GCP', 'Knowledge Distillation', 'Hugging Face'],
+    image: esmImg,
+    link: ""
+    },
   {
     id: '02',
     category: 'AI & ML System',
     title: 'JobPulse',
-    description: 'Developing robust predictive architectures for high-frequency market analysis and volatility modeling. By leveraging transformer-based models and attention mechanisms, we achieved unprecedented accuracy in predicting non-linear market shifts.',
+    description: 'I built a RAG-powered chatbot for jobs query with market insight analysis chart. The pipeline starts from fetching API for job postings data, stores them in cloud datalake such as GCP bucket, then transform raw fetched data to BigQuery as a curated cloud data warehouse, then vectorize transformed data and store them to Qdrant for serving RAG query. I used Airflow to orchrestate whole pipeline to make everything running smoothly.',
     tags: ['RAG', 'Airflow', 'LLM', 'ML System', 'Vector Database'],
-    image: proteinImg
+    image: jobpulseImg,
+    link: "https://github.com/nakorn-b/jobpulse"
   },
 ];
+
+const MagneticButton = ({ children, href }: { children: React.ReactNode, href?: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current!.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX * 0.3, y: middleY * 0.3 });
+  };
+
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  const { x, y } = position;
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x, y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className="w-fit"
+    >
+      <button 
+        onClick={() => href && window.open(href, '_blank')}
+        className="w-fit px-8 py-3 rounded-full bg-primary text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 tactile-press relative group overflow-hidden"
+      >
+        <span className="relative z-10">{children}</span>
+        <div className="absolute inset-0 bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+      </button>
+    </motion.div>
+  );
+};
 
 const ProjectCard = ({ 
   i, 
@@ -81,13 +121,13 @@ const ProjectCard = ({
           </div>
 
           <div className="mt-auto pb-10 md:pb-0">
-            <button className="w-fit px-8 py-3 rounded-full bg-primary text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 tactile-press">
+            <MagneticButton href={project.link}>
               Live Project
-            </button>
+            </MagneticButton>
           </div>
         </div>
 
-        {/* Right Column: Image (Optional) */}
+        {/* Right Column: Image (Standard Stacking) */}
         {project.image && (
           <div className="relative flex-1 h-full min-h-[240px] md:min-h-0 hidden md:block">
             <div className="absolute inset-0 rounded-[2.5rem] overflow-hidden border border-white/5 bg-white/[0.02]">

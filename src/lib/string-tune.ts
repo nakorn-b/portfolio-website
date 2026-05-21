@@ -1,4 +1,4 @@
-import { StringTune, StringMagnetic } from '@fiddle-digital/string-tune';
+import { StringTune, StringMagnetic, StringImpulse } from '@fiddle-digital/string-tune';
 
 export const initStringTune = () => {
   if (typeof window === 'undefined') return;
@@ -21,23 +21,24 @@ export const initStringTune = () => {
         'magnetic-lerp': 0.15
       });
 
-      // Register module
+      // Register modules
       st.use(StringMagnetic);
-      console.log('📦 StringTune: Magnetic module registered');
+      st.use(StringImpulse);
+      console.log('📦 StringTune: Modules registered');
 
       // Start the engine
       st.start(60);
       
       // Explicitly disable any scroll event interference
       if ((st as any).scrollManager) {
-        (st as any).scrollManager.stop();
-        if ((st as any).scrollManager.activeController) {
-          (st as any).scrollManager.activeController.disableScrollEvents();
-        }
-        console.log('🚫 StringTune: Scroll management completely stopped');
+        // (st as any).scrollManager.stop();
+        // if ((st as any).scrollManager.activeController) {
+        //   (st as any).scrollManager.activeController.disableScrollEvents();
+        // }
+        // console.log('🚫 StringTune: Scroll management completely stopped');
       }
       const scan = () => {
-        const elements = document.querySelectorAll('[data-string="magnetic"], [string="magnetic"]');
+        const elements = document.querySelectorAll('[string="magnetic"], [string="impulse"]');
         console.log(`🔍 StringTune: Found ${elements.length} elements to register`);
         
         elements.forEach((el) => {

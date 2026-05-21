@@ -11,8 +11,7 @@ export const Experience: React.FC = () => {
       company: 'Sony Device Technology, Thailand',
       logo: sonyLogo,
       points: [
-        'Architected robust data pipelines for multi-terabyte datasets.',
-        'Streamlined model deployment workflows, reducing latency by 40%.'
+        
       ]
     },
     {
@@ -21,8 +20,7 @@ export const Experience: React.FC = () => {
       company: 'Ritsumeikan University, Japan',
       logo: ritsumeikanLogo,
       points: [
-        'Pioneering high-fidelity deep learning models for advanced style transfer.',
-        'Optimizing GAN architectures for real-time synthesis on HPC clusters.'
+        'Developed experimental LLM-based systems for interactive narrative generation using GPT-4o mini, focusing on prompt engineering and output quality assessment to support ongoing master\'s thesis research on interactive storytelling frameworks.'
       ]
     },
   ];
