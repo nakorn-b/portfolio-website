@@ -25,12 +25,12 @@ void main(){
 
   vec4 o = vec4(0.0);
 
-  // === your code with safe inits & valid mat2 multiply, tanh replacement ===
+  // === reduced iterations for performance ===
   vec3 p = vec3(0.0);
   vec3 v = vec3(1.0, 2.0, 6.0);
   float i = 0.0, z = 1.0, d = 1.0, f = 1.0;
 
-  for ( ; i++ < 30.0;
+  for ( ; i++ < 12.0;
         o.rgb += (cos((p.x + z + v) * 0.1) + 1.0) / d / f / z )
   {
     p = z * normalize(FC * 2.0 - r.xyy);
@@ -54,6 +54,11 @@ export default function ShaderDemo_ATC(){
   const preRef = useRef<HTMLPreElement>(null)
 
   useEffect(() => {
+    // Skip on touch devices to save performance as per design guidelines
+    if (window.matchMedia('(hover: none)').matches) {
+      return;
+    }
+
     const canvas = ref.current!, pre = preRef.current!
     const gl = canvas.getContext("webgl2", { premultipliedAlpha:false })
     if (!gl) { pre.textContent = "WebGL2 not available"; return }
@@ -91,7 +96,7 @@ export default function ShaderDemo_ATC(){
     const uTime = gl.getUniformLocation(prog, "u_time")
 
     const resize = () => {
-      const dpr = Math.max(1, Math.min(1.5, window.devicePixelRatio||1))
+      const dpr = Math.min(1.2, window.devicePixelRatio || 1)
       const w = Math.floor((canvas.clientWidth||window.innerWidth)*dpr)
       const h = Math.floor((canvas.clientHeight||window.innerHeight)*dpr)
       if (canvas.width!==w || canvas.height!==h){ canvas.width=w; canvas.height=h }

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, MotionValue, useMotionTemplate } from 'framer-motion';
 import jobpulseImg from '../assets/jobppulse.png';
 import esmImg from '../assets/distilESM-2-AMP.png';
@@ -27,10 +27,17 @@ const projects = [
 const MagneticButton = ({ children, href }: { children: React.ReactNode, href?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.matchMedia('(max-width: 768px) or (hover: none)').matches);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleMouse = (e: React.MouseEvent) => {
-    // Skip magnetic effect on touch devices even if mouse-like events trigger
-    if (window.matchMedia('(hover: none)').matches) return;
+    if (isMobile) return;
     
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current!.getBoundingClientRect();
@@ -50,7 +57,7 @@ const MagneticButton = ({ children, href }: { children: React.ReactNode, href?: 
       ref={ref}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      animate={{ x, y }}
+      animate={{ x: isMobile ? 0 : x, y: isMobile ? 0 : y }}
       transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
       className="w-fit"
     >
@@ -85,14 +92,14 @@ const ProjectCard = ({
   const transform = useMotionTemplate`scale(${scale})`;
 
   return (
-    <div ref={container} className="h-[80vh] flex items-center justify-center sticky top-16 md:top-20 px-4">
+    <div ref={container} className="min-h-[85vh] md:h-[80vh] flex items-center justify-center sticky top-12 md:top-20 px-4 py-8 md:py-0">
       <motion.div 
         style={{ 
           transform, 
           top: `${i * 28}px`,
           willChange: 'transform'
         }} 
-        className="relative w-full h-full bg-[#0C0C0C] rounded-[3rem] md:rounded-[4rem] border border-white/10 p-8 md:p-12 lg:p-16 pb-20 md:pb-24 lg:pb-32 flex flex-col md:flex-row gap-12 overflow-hidden shadow-2xl"
+        className="relative w-full h-fit md:h-full bg-[#0C0C0C] rounded-[2.5rem] md:rounded-[4rem] border border-white/10 p-6 sm:p-8 md:p-12 lg:p-16 pb-12 md:pb-16 lg:pb-20 flex flex-col md:flex-row gap-8 md:gap-12 overflow-hidden shadow-2xl"
       >
         {/* Background Decorative ID */}
         <span className="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 text-[35vw] md:text-[25vw] font-bold text-white/[0.08] md:text-white/[0.05] select-none pointer-events-none leading-none">
@@ -123,7 +130,7 @@ const ProjectCard = ({
             ))}
           </div>
 
-          <div className="mt-auto pb-10 md:pb-0">
+          <div className="mt-6 md:mt-8">
             <MagneticButton href={project.link}>
               Live Project
             </MagneticButton>

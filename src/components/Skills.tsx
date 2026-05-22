@@ -46,7 +46,7 @@ export const Skills: React.FC = () => {
           transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
           className="mb-24 flex flex-col"
         >
-          <span className="eyebrow-pill text-primary border-primary/20 bg-primary/5">Arsenal</span>
+          <span className="eyebrow-pill text-primary border-primary/20 bg-primary/5">Stack</span>
           <h2 className="display-lg text-foreground">Technical <br /> <span className="text-primary italic font-light">Skills</span></h2>
         </motion.div>
 

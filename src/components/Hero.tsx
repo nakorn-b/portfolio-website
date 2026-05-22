@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, useMotionTemplate, type Variants } from 'framer-motion';
 import keycapVid from '../assets/3D-keycap.mp4';
 
@@ -51,6 +51,15 @@ const ChromaticHeading = ({ children, progress }: { children: React.ReactNode, p
 
 export const Hero: React.FC = () => {
   const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.matchMedia('(max-width: 768px) or (hover: none)').matches);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
@@ -129,41 +138,33 @@ export const Hero: React.FC = () => {
           transition={{ duration: 1.2, delay: 0.8, ease: [0.23, 1, 0.32, 1] }}
           className="relative z-10 flex flex-col items-center mt-12"
         >
-          <motion.div 
-            style={{ 
-              scale: videoScale, 
-              borderRadius: videoRadius,
-              rotateZ: videoRotate,
-              willChange: 'transform, border-radius'
-            }}
-            {...({
+          <div 
+            {...(isMobile ? {} : {
               string: "magnetic",
               "string-radius": "800",
-              "string-strength": "0.1"
+              "string-strength": "0.15"
             } as any)}
-            className="relative w-[260px] h-[280px] md:w-[480px] md:h-[480px] group overflow-hidden shadow-[0_0_100px_rgba(177,43,22,0.2)]"
+            style={{ 
+              transform: isMobile ? 'none' : 'translate(calc(var(--magnetic-x) * 0.3%), calc(var(--magnetic-y) * 0.3%)) rotateX(calc(var(--magnetic-y) * -0.3deg)) rotateY(calc(var(--magnetic-x) * 0.3deg))',
+              willChange: 'transform',
+            }}
+            className="relative"
           >
-            <div 
-              style={{
-                transform: 'translate(calc(var(--magnetic-x) * 0.5%), calc(var(--magnetic-y) * 0.5%)) rotateX(calc(var(--magnetic-y) * -0.5deg)) rotateY(calc(var(--magnetic-x) * 0.5deg))',
-                willChange: 'transform',
-                width: '100%',
-                height: '100%'
+            <motion.div 
+              style={{ 
+                scale: videoScale, 
+                borderRadius: videoRadius,
+                rotateZ: videoRotate,
+                willChange: 'transform, border-radius'
               }}
+              className="relative w-[260px] h-[280px] md:w-[480px] md:h-[480px] group overflow-hidden"
             >
-              <HeroVideo />
-            </div>
-          </motion.div>
+              <div className="w-full h-full">
+                <HeroVideo />
+              </div>
+            </motion.div>
+          </div>
 
-          {/* Abstract floating text under video */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.4 }}
-            transition={{ duration: 1.5, delay: 1 }}
-            className="max-w-md text-center font-sans text-[10px] md:text-xs text-white leading-relaxed mt-4 px-8"
-          >
-            Pioneering high-fidelity neural architectures, focusing on structural integrity and textural nuance. Engineering the next epoch of intelligence.
-          </motion.p>
         </motion.div>
 
       </div>

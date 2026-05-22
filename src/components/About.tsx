@@ -3,16 +3,8 @@ import { motion, type Variants } from 'framer-motion';
 import profileImg from '../assets/profile.png';
 import AnimatedTextCycle from './ui/animated-text-cycle';
 
-const WordReveal = ({ text, delay = 0 }: { text: string; delay?: number }) => {
-  const [isMobile, setIsMobile] = useState(false);
+const WordReveal = ({ text, delay = 0, isMobile = false }: { text: string; delay?: number; isMobile?: boolean }) => {
   const words = text.split(' ');
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.matchMedia('(max-width: 768px)').matches);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
   
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -54,7 +46,7 @@ const WordReveal = ({ text, delay = 0 }: { text: string; delay?: number }) => {
       viewport={{ once: true, margin: "-100px" }}
     >
       {words.map((word, index) => (
-        <motion.span key={index} variants={child} style={{ willChange: 'transform, opacity' }}>
+        <motion.span key={index} variants={child} style={{ willChange: isMobile ? 'auto' : 'transform, opacity' }}>
           {word}
         </motion.span>
       ))}
@@ -63,6 +55,15 @@ const WordReveal = ({ text, delay = 0 }: { text: string; delay?: number }) => {
 };
 
 export const About: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.matchMedia('(max-width: 768px) or (hover: none)').matches);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <section className="section-spacing bg-background px-4 md:px-6 overflow-visible relative border-b border-foreground/5" id="about">
       <div className="max-w-[1400px] mx-auto min-h-[50vh] md:min-h-[60vh] flex flex-col justify-center">
@@ -78,7 +79,7 @@ export const About: React.FC = () => {
               transition={{ duration: 1.2, ease: [0.32, 0.72, 0, 1] }}
               className="flex flex-col"
             >
-              <span className="eyebrow-pill text-primary border-primary/20 bg-primary/5">Philosophy</span>
+              <span className="eyebrow-pill text-primary border-primary/20 bg-primary/5">Background</span>
               <h2 className="text-[14vw] lg:text-[10vw] font-caslon font-bold text-primary leading-[0.85] tracking-tighter uppercase select-none">
                 About <br /> <AnimatedTextCycle words={["Me", "Nemo", "Nakorn"]} interval={3000} />
               </h2>
@@ -88,6 +89,7 @@ export const About: React.FC = () => {
               <WordReveal 
                 text="Hello! I'm Nemo, a Computer Science graduate of Kasetsart University. I'm currently a Data Scientist based in Thailand with experience in LLM research. In my free time, I enjoy studying Japanese, deep diving to neural network architectures, and building AI projects." 
                 delay={0.3}
+                isMobile={isMobile}
               />
               
               <motion.div 
@@ -114,14 +116,14 @@ export const About: React.FC = () => {
           >
             {/* @ts-ignore - Custom attributes for string-tune library */}
             <div 
-              {...({
+              {...(isMobile ? {} : {
                 string: "magnetic",
                 "string-radius": "600",
                 "string-strength": "0.1"
               } as any)}
               style={{
-                transform: 'translate(calc(var(--magnetic-x) * 0.3%), calc(var(--magnetic-y) * 0.3%))',
-                willChange: 'transform',
+                transform: isMobile ? 'none' : 'translate(calc(var(--magnetic-x) * 0.3%), calc(var(--magnetic-y) * 0.3%))',
+                willChange: isMobile ? 'auto' : 'transform',
               }}
               className="bg-muted-surface p-2 rounded-[3rem] border border-foreground/5 shadow-2xl shadow-primary/5 w-full max-w-[280px] sm:max-w-[340px] md:max-w-[480px] relative z-10"
             >
