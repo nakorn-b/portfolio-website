@@ -80,6 +80,8 @@
     @apply bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-white;
     margin: 0;
     overflow-x: hidden;
+    position: relative;
+    width: 100%;
   }
 
   /* Grain/Noise Overlay - Elite Implementation (Disabled on mobile for performance) */

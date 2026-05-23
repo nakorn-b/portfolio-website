@@ -65,10 +65,10 @@ export const About: React.FC = () => {
   }, []);
 
   return (
-    <section className="section-spacing bg-background px-4 md:px-6 overflow-visible relative border-b border-foreground/5" id="about">
+    <section className="section-spacing bg-background px-4 md:px-6 overflow-hidden relative border-b border-foreground/5" id="about">
       <div className="max-w-[1400px] mx-auto min-h-[50vh] md:min-h-[60vh] flex flex-col justify-center">
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-center">
           
           {/* Left Column: Huge Title & Intro */}
           <div className="lg:col-span-7 flex flex-col gap-10 md:gap-12">
@@ -80,7 +80,7 @@ export const About: React.FC = () => {
               className="flex flex-col"
             >
               <span className="eyebrow-pill text-primary border-primary/20 bg-primary/5">Background</span>
-              <h2 className="text-[14vw] lg:text-[10vw] font-caslon font-bold text-primary leading-[0.85] tracking-tighter uppercase select-none">
+              <h2 className="text-[12vw] lg:text-[10vw] font-caslon font-bold text-primary leading-[0.85] tracking-tighter uppercase select-none">
                 About <br /> <AnimatedTextCycle words={["Me", "Nemo", "Nakorn"]} interval={3000} />
               </h2>
             </motion.div>

@@ -8,7 +8,7 @@ const projects = [
     id: '01',
     category: 'Bioinformatics & AI',
     title: 'DistilESM-2-AMP',
-    description: 'Pioneering computational efficiency in bioinformatics, this project centered on distilling the massive ESM-2 transformer into a specialized 4M parameter student model. The process began by filtering 8 million UniProt sequences using PySpark, feeding a high-throughput training pipeline on a SLURM-managed GPU cluster. Through precise knowledge distillation and fine-tuning on curated AMP datasets, the student model eventually surpassed its teacher’s accuracy in domain-specific classification. The project culminated in a production-ready deployment on GCP Cloud Run and HuggingFace, serving batch peptide classification with real-time confidence scores.',
+    description: 'Pioneering computational efficiency in bioinformatics by distilling a massive ESM-2 transformer into a specialized 4M parameter student model. Surpassed teacher accuracy in domain-specific classification, serving real-time peptide classification on GCP.',
     tags: ['PyTorch', 'PySpark', 'GCP', 'Knowledge Distillation', 'Hugging Face'],
     image: esmImg,
     link: ""
@@ -17,7 +17,7 @@ const projects = [
     id: '02',
     category: 'AI & ML System',
     title: 'JobPulse',
-    description: 'I built a RAG-powered chatbot for jobs query with market insight analysis chart. The pipeline starts from fetching API for job postings data, stores them in cloud datalake such as GCP bucket, then transform raw fetched data to BigQuery as a curated cloud data warehouse, then vectorize transformed data and store them to Qdrant for serving RAG query. I used Airflow to orchrestate whole pipeline to make everything running smoothly.',
+    description: 'A RAG-powered chatbot for job market analysis. Built an automated pipeline with Airflow to fetch job data, store in GCP BigQuery, and vectorize into Qdrant for semantic search and market insights.',
     tags: ['RAG', 'Airflow', 'LLM', 'ML System', 'Vector Database'],
     image: jobpulseImg,
     link: "https://github.com/nakorn-b/jobpulse"
@@ -63,7 +63,7 @@ const MagneticButton = ({ children, href }: { children: React.ReactNode, href?: 
     >
       <button 
         onClick={() => href && window.open(href, '_blank')}
-        className="w-fit px-8 py-3 rounded-full bg-primary text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 tactile-press relative group overflow-hidden"
+        className="w-fit px-6 py-2.5 md:px-8 md:py-3 rounded-full bg-primary text-white text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 tactile-press relative group overflow-hidden"
       >
         <span className="relative z-10">{children}</span>
         <div className="absolute inset-0 bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
@@ -89,48 +89,55 @@ const ProjectCard = ({
   const scale = useTransform(progress, range, [1, targetScale], {
     ease: (v) => 1 - Math.pow(1 - v, 4)
   });
-  const transform = useMotionTemplate`scale(${scale})`;
+  
+  // Parallax y-offset to create a "slide under" effect
+  const y = useTransform(progress, range, [0, i * -20]);
+  
+  const transform = useMotionTemplate`scale(${scale}) translateY(${y}px)`;
 
   return (
-    <div ref={container} className="min-h-[85vh] md:h-[80vh] flex items-center justify-center sticky top-12 md:top-20 px-4 py-8 md:py-0">
+    <div ref={container} className="min-h-[70dvh] md:h-[90vh] flex items-start justify-center sticky top-16 md:top-24 px-4 py-4 md:py-0">
       <motion.div 
         style={{ 
           transform, 
-          top: `${i * 28}px`,
+          top: `${i * 24}px`,
+          zIndex: projects.length - i,
           willChange: 'transform'
         }} 
-        className="relative w-full h-fit md:h-full bg-[#0C0C0C] rounded-[2.5rem] md:rounded-[4rem] border border-white/10 p-6 sm:p-8 md:p-12 lg:p-16 pb-12 md:pb-16 lg:pb-20 flex flex-col md:flex-row gap-8 md:gap-12 overflow-hidden shadow-2xl"
+        className="relative w-full h-auto max-h-[calc(100dvh-100px)] md:h-full bg-[#0C0C0C] rounded-[2rem] md:rounded-[4rem] border border-white/10 p-6 sm:p-8 md:p-12 lg:p-16 flex flex-col md:flex-row gap-6 md:gap-12 overflow-hidden shadow-2xl mt-4 md:mt-0"
       >
         {/* Background Decorative ID */}
-        <span className="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 text-[35vw] md:text-[25vw] font-bold text-white/[0.08] md:text-white/[0.05] select-none pointer-events-none leading-none">
+        <span className="absolute -bottom-4 -right-4 md:-bottom-10 md:-right-10 text-[30vw] md:text-[25vw] font-bold text-white/[0.05] select-none pointer-events-none leading-none">
           {project.id}
         </span>
 
         {/* Left Column: Content */}
-        <div className="relative z-10 flex flex-col flex-1 gap-8 md:gap-10">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-4">
-              <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary">{project.category}</span>
-              <div className="h-px w-12 bg-white/20" />
+        <div className="relative z-10 flex flex-col flex-1 gap-6 md:gap-10 overflow-hidden">
+          <div className="flex flex-col gap-3 md:gap-4 shrink-0">
+            <div className="flex items-center gap-3 md:gap-4">
+              <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] md:tracking-[0.3em] text-primary">{project.category}</span>
+              <div className="h-px w-8 md:w-12 bg-white/20" />
             </div>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-caslon font-semibold text-white tracking-tight leading-tight">
+            <h3 className="text-3xl md:text-5xl lg:text-6xl font-caslon font-semibold text-white tracking-tight leading-tight">
               {project.title}
             </h3>
           </div>
 
-          <p className="font-sans text-base md:text-lg text-white/60 leading-relaxed max-w-xl">
-            {project.description}
-          </p>
+          <div className="overflow-y-auto pr-2 custom-scrollbar">
+            <p className="font-sans text-sm md:text-lg text-white/60 leading-relaxed max-w-xl">
+              {project.description}
+            </p>
+          </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 shrink-0">
             {project.tags.map(tag => (
-              <span key={tag} className="px-3 py-1 rounded-full border border-white/10 text-[10px] uppercase tracking-widest text-white/40 font-medium">
+              <span key={tag} className="px-2.5 py-1 rounded-full border border-white/10 text-[9px] md:text-[10px] uppercase tracking-widest text-white/30 font-medium">
                 {tag}
               </span>
             ))}
           </div>
 
-          <div className="mt-6 md:mt-8">
+          <div className="mt-2 md:mt-4 shrink-0">
             <MagneticButton href={project.link}>
               Live Project
             </MagneticButton>

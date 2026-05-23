@@ -37,7 +37,7 @@ export const Skills: React.FC = () => {
   ];
 
   return (
-    <section className="section-spacing bg-background px-4 md:px-6" id="skills">
+    <section className="section-spacing bg-background px-4 md:px-6 overflow-hidden" id="skills">
       <div className="max-w-[1400px] mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}

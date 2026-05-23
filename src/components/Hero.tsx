@@ -108,10 +108,10 @@ export const Hero: React.FC = () => {
         >
           <motion.h1 
             variants={itemVariants}
-            className="font-caslon font-semibold text-[12vw] md:text-[6vw] leading-[0.85] tracking-tighter uppercase flex flex-col md:block items-center"
+            className="font-caslon font-semibold text-[10vw] md:text-[6vw] leading-[0.9] md:leading-[0.85] tracking-tighter uppercase flex flex-col md:block items-center"
           >
             <ChromaticHeading progress={scrollYProgress}>
-              <span>Nakorn</span> <span className="italic font-light">Boonprasong</span>
+              <span className="block md:inline">Nakorn</span> <span className="italic font-light block md:inline">Boonprasong</span>
             </ChromaticHeading>
           </motion.h1>
           
